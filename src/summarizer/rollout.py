@@ -48,7 +48,7 @@ Generate a summary that conveys all relevant information in a concise manner."""
 
     messages = trajectory.messages()
     chat = await client.chat.completions.create(
-        messages=messages, model=model.name, max_tokens=1000
+        model=model.inference_model_name, messages=messages, max_tokens=1000
     )
     choice = chat.choices[0]
     if scenario.use_full:

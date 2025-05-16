@@ -31,6 +31,22 @@ gpt_4_1 = art.Model(
     inference_base_url="https://openrouter.ai/api/v1",
 )
 
+o4_mini = art.Model(
+    name="o4-mini",
+    project=PROJECT_NAME,
+    inference_model_name="openai/o4-mini",
+    inference_api_key=os.getenv("OPENROUTER_API_KEY"),
+    inference_base_url="https://openrouter.ai/api/v1",
+)
+
+gemini_2_5_pro = art.Model(
+    name="gemini-2.5-pro",
+    project=PROJECT_NAME,
+    inference_model_name="google/gemini-2.5-pro-preview",
+    inference_api_key=os.getenv("OPENROUTER_API_KEY"),
+    inference_base_url="https://openrouter.ai/api/v1",
+)
+
 val_documents, _ = load_documents()
 
 
@@ -51,7 +67,13 @@ async def main():
     backend = await SkyPilotBackend.initialize_cluster(
         cluster_name=CLUSTER_NAME, env_path=".env", gpu="H100"
     )
-    models = [gpt_4o, gpt_4o_mini, gpt_4_1]
+    models = [
+        # gpt_4o,
+        # gpt_4o_mini,
+        # gpt_4_1,
+        o4_mini,
+        gemini_2_5_pro,
+    ]
     for model in models:
         await model.register(backend)
     # benchmark all models simultaneously
