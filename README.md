@@ -2,7 +2,7 @@
 
 This repository contains the code for training a document-summarizing agent using reinforcement learning. The agent is based on [Qwen2.5-3B-Instruct](https://huggingface.co/Qwen/Qwen2.5-3B-Instruct) and learns from its own experience through the [ART](https://github.com/openpipe/art) reinforcement learning framework. While training runs are non-deterministic, the agent usually outperforms gpt-4o within 5-20 training steps, which equates to less than 20 minutes of training time on a single H100 GPU.
 
-<img src="assets/benchmarks/summarizer/accuracy-training-progress.svg" alt="Benchmark Win Rate Comparison" width="500"/>
+<img src="assets/benchmarks/summarize/accuracy-training-progress.svg" alt="Benchmark Win Rate Comparison" width="500"/>
 
 ## Getting Started
 
@@ -93,11 +93,11 @@ This script will:
 
 Once the benchmark generation script has finished running, you can view the results and generate visual charts by navigating to `benchmarks/display_benchmarks.ipynb` and running the cells. After running all the cells, you should see something like the following:
 
-<img src="assets/benchmarks/summarizer/accuracy-training-progress.svg" alt="Benchmark Win Rate Comparison" width="500"/>
+<img src="assets/benchmarks/summarize/accuracy-training-progress.svg" alt="Benchmark Win Rate Comparison" width="500"/>
 
 _The win rate of the trained model compared to gpt-4o, gpt-4o-mini, and gpt-4.1 at each training step. By step 5 of this training run, the trained model outperforms every other model._
 
-<img src="assets/benchmarks/summarizer/accuracy-comparison.svg" alt="Benchmark Accuracy Comparison" width="500"/>
+<img src="assets/benchmarks/summarize/accuracy-comparison.svg" alt="Benchmark Accuracy Comparison" width="500"/>
 
 _A side-by-side comparison of the win rates of the trained model, gpt-4o, gpt-4o-mini, and gpt-4.1. The trained model began with a 0% win rate, but by the final step, it had a 96% win rate._
 
