@@ -15,14 +15,6 @@ gpt_4o = art.Model(
     inference_base_url="https://openrouter.ai/api/v1",
 )
 
-gpt_4o_mini = art.Model(
-    name="gpt-4o-mini",
-    project=PROJECT_NAME,
-    inference_model_name="openai/gpt-4o-mini",
-    inference_api_key=os.getenv("OPENROUTER_API_KEY"),
-    inference_base_url="https://openrouter.ai/api/v1",
-)
-
 gpt_4_1 = art.Model(
     name="gpt-4.1",
     project=PROJECT_NAME,
@@ -68,9 +60,8 @@ async def main():
         cluster_name=CLUSTER_NAME, env_path=".env", gpu="H100"
     )
     models = [
-        # gpt_4o,
-        # gpt_4o_mini,
-        # gpt_4_1,
+        gpt_4o,
+        gpt_4_1,
         o4_mini,
         gemini_2_5_pro,
     ]
