@@ -9,7 +9,7 @@ from summarizer.load_documents import load_documents
 
 load_dotenv()
 
-AGENT_NAME = "agent-001"
+AGENT_NAME = "agent-002"
 PROJECT_NAME = "summarize"
 CLUSTER_NAME = "art"
 
@@ -18,7 +18,9 @@ val_documents, train_documents = load_documents()
 
 async def main():
     backend = await SkyPilotBackend.initialize_cluster(
-        cluster_name=CLUSTER_NAME, env_path=".env", gpu="H100"
+        cluster_name=CLUSTER_NAME,
+        env_path=".env",
+        gpu="H100",
     )
 
     model = art.TrainableModel(

@@ -6,7 +6,7 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "openpipe>=4.50.0",
-    "openpipe-art>=0.3.7",
+    "openpipe-art>=0.3.6",
 ]
 
 [build-system]
