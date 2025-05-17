@@ -11,7 +11,7 @@ load_dotenv()
 
 AGENT_NAME = "agent-002"
 PROJECT_NAME = "summarize"
-CLUSTER_NAME = "art"
+CLUSTER_NAME = "summarize-art"
 
 
 async def main():
