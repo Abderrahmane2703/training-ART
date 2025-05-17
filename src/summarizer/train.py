@@ -13,10 +13,10 @@ AGENT_NAME = "agent-002"
 PROJECT_NAME = "summarize"
 CLUSTER_NAME = "art"
 
-val_documents, train_documents = load_documents()
-
 
 async def main():
+    val_documents, train_documents = load_documents()
+
     backend = await SkyPilotBackend.initialize_cluster(
         cluster_name=CLUSTER_NAME,
         env_path=".env",

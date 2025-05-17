@@ -2,6 +2,7 @@ from datasets import load_dataset
 import random
 from pydantic import BaseModel
 from typing import List, Dict, Tuple
+import os
 
 
 class Question(BaseModel):
@@ -35,10 +36,19 @@ def load_documents() -> Tuple[List[Document], List[Document]]:
     random.seed(80)
     random.shuffle(all_documents)
 
-    # Now split into train/val/test sets
-    val_size = min(25, len(all_documents) // 10)
+    val_size = int(os.getenv("VAL_SIZE", 91))
+    train_size = int(os.getenv("TRAIN_SIZE", 3500))
+
+    if train_size + val_size > len(all_documents):
+        raise ValueError(
+            f"Train size + val size ({train_size + val_size}) is greater than the total number of documents ({len(all_documents)})"
+        )
 
     val_documents = all_documents[:val_size]
-    train_documents = all_documents[val_size:]
+    train_documents = all_documents[val_size : val_size + train_size]
+
+    print(f"Loaded {len(all_documents)} documents")
+    print(f"Train set size: {len(train_documents)}")
+    print(f"Val set size: {len(val_documents)}")
 
     return val_documents, train_documents

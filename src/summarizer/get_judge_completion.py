@@ -24,7 +24,7 @@ async def get_judge_completion(
             async with semaphore:
                 completion = await client.chat.completions.create(
                     messages=[{"role": "user", "content": prompt}],
-                    model="google/gemini-2.5-flash-preview",
+                    model="google/gemini-2.5-pro-preview",
                     temperature=temperature,
                     max_tokens=max_tokens,
                 )
@@ -40,3 +40,9 @@ async def get_judge_completion(
                     f"[Failure] get_judge_completion failed after {retries} attempts: {e}"
                 )
                 return "ERROR: Get judge completion failed"
+
+
+def clear_judge_cache():
+    """Clear the cache for get_judge_completion."""
+    get_judge_completion.cache_clear()
+    print("Judge cache cleared")
