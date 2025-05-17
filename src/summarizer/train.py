@@ -63,7 +63,10 @@ async def main():
                 art.gather_trajectory_groups(
                     (
                         art.TrajectoryGroup(
-                            rollout(model, SummarizerScenario(doc=document))
+                            rollout(
+                                model,
+                                SummarizerScenario(doc=document, step=current_step),
+                            )
                             for _ in range(2)
                         )
                         for document in val_documents

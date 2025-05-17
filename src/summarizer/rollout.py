@@ -3,13 +3,21 @@ import openai
 import random
 import regex
 from pydantic import BaseModel
+import time
+import os
 
 from summarizer.get_judge_completion import get_judge_completion
 from summarizer.load_documents import Document
 
+from openpipe.client import OpenPipe
+
+
+op_client = OpenPipe()
+
 
 class SummarizerScenario(BaseModel):
     doc: Document
+    step: int = 0
     use_full: bool = False
 
 
@@ -46,11 +54,13 @@ Generate a summary that conveys all relevant information in a concise manner."""
         {"role": "user", "content": summarize_prompt}
     )
 
+    requested_at = int(time.time() * 1000)
+
     messages = trajectory.messages()
-    chat = await client.chat.completions.create(
+    completion = await client.chat.completions.create(
         model=model.inference_model_name, messages=messages, max_tokens=1000
     )
-    choice = chat.choices[0]
+    choice = completion.choices[0]
     if scenario.use_full:
         choice.message.content = scenario.doc.document_text
     trajectory.messages_and_choices.append(choice)
@@ -105,5 +115,29 @@ Generate a summary that conveys all relevant information in a concise manner."""
     trajectory.metrics["word_count"] = len(summary.split())
     trajectory.metrics["len"] = len(summary)
     trajectory.reward = total_score
+
+    if os.getenv("OPENPIPE_API_KEY"):
+        try:
+            op_client.report(
+                requested_at=requested_at,
+                received_at=int(time.time() * 1000),
+                req_payload={
+                    "model": model.name,
+                    "messages": messages,
+                    "metadata": {
+                        "project": "summarize",
+                        "step": scenario.step,
+                        "percent": trajectory.metrics["percent"],
+                        "percent_full": trajectory.metrics["percent_full"],
+                        "percent_diff": trajectory.metrics["percent_diff"],
+                        "word_count": trajectory.metrics["word_count"],
+                        "len": trajectory.metrics["len"],
+                    },
+                },
+                resp_payload=completion,
+                status_code=200,
+            )
+        except Exception as e:
+            print(f"Error reporting to OpenPipe: {e}")
 
     return trajectory
