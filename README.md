@@ -8,7 +8,7 @@ The goal of your agent is to summarize a document into 350 words or less while m
 
 There are 3591 documents in the Repliqa dataset. By default, your agent will train on 3500 documents and validate on 91 documents. You can change these numbers by setting the `TRAIN_SIZE` and `VAL_SIZE` environment variables.
 
-We've evaluated several SOTA models on this task. Their performance is listed below. The scores below represent the average percentage of questions that each model's summary allowed Gemini 2.5 Flash to answer correctly.
+We've evaluated several SOTA models on this task. The scores below represent the average percentage of questions that each model's summary allowed Gemini 2.5 Flash to answer correctly.
 
 - GPT-4o: 35%
 - GPT-4.1: 46%
