@@ -10,10 +10,10 @@ There are 3591 documents in the Repliqa dataset. By default, your agent will tra
 
 We've evaluated several SOTA models on this task. Their performance is listed below. The scores below represent the average percentage of questions that each model's summary allowed Gemini 2.5 Flash to answer correctly.
 
-- GPT-4o: 16%
-- GPT-4.1: 18%
-- o4-mini 21%
-- gemini-2.5-pro-preview: 23%
+- GPT-4o: 35%
+- GPT-4.1: 46%
+- o4-mini 60%
+- gemini-2.5-pro-preview: 40%
 
 Your goal is to train a model that outperforms all of them.
 
