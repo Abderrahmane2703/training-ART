@@ -113,4 +113,4 @@ _The percentage of questions that each model's summary allowed Gemini 2.5 Flash 
 
 <img src="assets/benchmarks/summarize/percentage-comparison.svg" alt="Benchmark Percentage of Questions Answered Comparison" width="500"/>
 
-_A side-by-side comparison of the percentage of questions that each model's summary allowed Gemini 2.5 Flash to answer correctly. The trained model began with a percentage of 12%, but by the final step, it was able to generate summaries that allowed Gemini 2.5 Flash to answer 24% of the questions correctly._
+_A side-by-side comparison of the percentage of questions that each model's summary allowed Gemini 2.5 Flash to answer correctly. The trained model began with a percentage of 37%, but by step 50, it was able to generate summaries that allowed Gemini 2.5 Flash to answer 67% of the questions correctly._
