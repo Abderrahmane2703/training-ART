@@ -8,12 +8,13 @@ The goal of your agent is to summarize a document into 350 words or less while m
 
 There are 3591 documents in the Repliqa dataset. By default, your agent will train on 3500 documents and validate on 91 documents. You can change these numbers by setting the `TRAIN_SIZE` and `VAL_SIZE` environment variables.
 
-We've evaluated several SOTA models on this task. The scores below represent the average percentage of questions that each model's summary allowed Gemini 2.5 Flash to answer correctly.
+We've evaluated several SOTA models on this task. The scores below represent the average percentage of questions that each model's summary allowed Gemini 2.5 Flash to answer correctly. These benchmarks fluctuate somewhat because temperature is set to `1` for ideal performance, but below are the average performances of each model.
 
 - GPT-4o: 38%
 - GPT-4.1: 45%
 - gemini-2.5-pro-preview: 36%
 - sonnet-4 57%
+
 
 Your goal is to train a model that outperforms all of them.
 
@@ -108,7 +109,7 @@ Once the benchmark generation script has finished running, you can view the resu
 
 <img src="assets/benchmarks/summarize/percentage-training-progress.svg" alt="Benchmark Percentage of Questions Answered Comparison" width="500"/>
 
-_The percentage of questions that each model's summary allowed Gemini 2.5 Flash to answer correctly at each training step. By step 5 of this training run, the trained model outperforms every other model._
+_The percentage of questions that each model's summary allowed Gemini 2.5 Flash to answer correctly at each training step. By step 37 of this training run, the trained model outperforms every other model._
 
 <img src="assets/benchmarks/summarize/percentage-comparison.svg" alt="Benchmark Percentage of Questions Answered Comparison" width="500"/>
 
