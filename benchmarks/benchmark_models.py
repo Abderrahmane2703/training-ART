@@ -24,18 +24,18 @@ gpt_4_1 = art.Model(
     inference_base_url="https://openrouter.ai/api/v1",
 )
 
-o4_mini = art.Model(
-    name="o4-mini",
-    project=PROJECT_NAME,
-    inference_model_name="openai/o4-mini",
-    inference_api_key=os.getenv("OPENROUTER_API_KEY"),
-    inference_base_url="https://openrouter.ai/api/v1",
-)
-
 gemini_2_5_pro = art.Model(
     name="gemini-2.5-pro",
     project=PROJECT_NAME,
     inference_model_name="google/gemini-2.5-pro-preview",
+    inference_api_key=os.getenv("OPENROUTER_API_KEY"),
+    inference_base_url="https://openrouter.ai/api/v1",
+)
+
+sonnet_4 = art.Model(
+    name="sonnet-4",
+    project=PROJECT_NAME,
+    inference_model_name="anthropic/claude-sonnet-4",
     inference_api_key=os.getenv("OPENROUTER_API_KEY"),
     inference_base_url="https://openrouter.ai/api/v1",
 )
@@ -64,8 +64,8 @@ async def main():
     models = [
         gpt_4o,
         gpt_4_1,
-        o4_mini,
         gemini_2_5_pro,
+        sonnet_4,
     ]
     for model in models:
         await model.register(backend)
