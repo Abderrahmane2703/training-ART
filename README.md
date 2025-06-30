@@ -12,7 +12,7 @@ We've evaluated several SOTA models on this task. The scores below represent the
 
 - GPT-4o: 38%
 - GPT-4.1: 45%
-- gemini-2.5-pro-preview: 36%
+- gemini-2.5-pro: 36%
 - sonnet-4 57%
 
 
