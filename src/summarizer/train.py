@@ -29,14 +29,14 @@ async def main():
         # when your client process ends
         in_process=False,
         # local path where the backend will store trajectory logs and model weights
-        path="./.art",
+        #path="./.art",
     )
 
 
     model = art.TrainableModel(
         name=AGENT_NAME,
         project=PROJECT_NAME,
-        base_model="s3://job-offer-generation/base-model/gemma-3-270m-it",
+        base_model="/mnt/c/Users/abder/Documents/CapitaleTech/Training/Summary-RL/gemma-3-270m-it",
     )
     #await backend._experimental_pull_from_s3(model)
     await model.register(backend)

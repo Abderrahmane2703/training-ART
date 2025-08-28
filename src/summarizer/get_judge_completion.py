@@ -1,8 +1,8 @@
 from async_lru import alru_cache
 import asyncio
+from openai import AsyncAzureOpenAI
 import os
 from dotenv import load_dotenv
-from openai import AsyncAzureOpenAI
 
 load_dotenv()
 
@@ -11,8 +11,8 @@ semaphore = asyncio.Semaphore(20)
 # Azure OpenAI configuration
 client = AsyncAzureOpenAI(
     api_key=os.getenv("AZURE_OPENAI_API_KEY"),
-    azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
-    api_version="2024-02-01"
+    azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),  # e.g., "https://your-resource.openai.azure.com/"
+    api_version="2024-02-01",  # Azure API version
 )
 
 
@@ -25,7 +25,7 @@ async def get_judge_completion(
             async with semaphore:
                 completion = await client.chat.completions.create(
                     messages=[{"role": "user", "content": prompt}],
-                    model=os.getenv("AZURE_DEPLOYMENT_NAME", "gpt-5-chat"),
+                    model=os.getenv("AZURE_DEPLOYMENT_NAME", "gpt-35-turbo"),  # Your Azure deployment name
                     temperature=temperature,
                     max_tokens=max_tokens,
                 )
