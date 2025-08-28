@@ -1,10 +1,15 @@
 print("🔄 Starting imports...")
+
 import asyncio
 from dotenv import load_dotenv
 print("✓ Basic imports loaded")
 
 load_dotenv()
 print("✓ Environment loaded")
+
+print("🔄 Loading Unsloth for optimization...")
+import unsloth
+print("✓ Unsloth loaded")
 
 print("🔄 Loading ART (this may take a while)...")
 import art
@@ -39,7 +44,7 @@ async def main():
     backend = LocalBackend(
         # set to True if you want your backend to shut down automatically
         # when your client process ends
-        in_process=False,
+        in_process=True,
         # local path where the backend will store trajectory logs and model weights
         #path="./.art",
     )
@@ -48,7 +53,7 @@ async def main():
     model = art.TrainableModel(
         name=AGENT_NAME,
         project=PROJECT_NAME,
-        base_model="s3://job-offer-generation/base-model/gemma-3-270m-it/",
+        base_model="unsloth/Qwen3-0.6B",  # Unsloth-optimized 600M param model
     )
     #await backend._experimental_pull_from_s3(model)
     await model.register(backend)
