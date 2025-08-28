@@ -1,0 +1,72 @@
+[
+  {
+    "context": {
+      "job_title": "Software Engineer",
+      "language": "en",
+      "skills": ["Python", "JavaScript", "React", "Node.js", "SQL"]
+    }
+  },
+  {
+    "context": {
+      "job_title": "Data Scientist",
+      "language": "en",
+      "skills": ["Python", "Machine Learning", "SQL", "Pandas", "Scikit-learn"]
+    }
+  },
+  {
+    "context": {
+      "job_title": "Frontend Developer",
+      "language": "en",
+      "skills": ["JavaScript", "React", "CSS", "HTML", "TypeScript"]
+    }
+  },
+  {
+    "context": {
+      "job_title": "Développeur Full Stack",
+      "language": "fr",
+      "skills": ["JavaScript", "Vue.js", "Node.js", "PostgreSQL", "Docker"]
+    }
+  },
+  {
+    "context": {
+      "job_title": "DevOps Engineer",
+      "language": "en",
+      "skills": ["AWS", "Docker", "Kubernetes", "Terraform", "Jenkins"]
+    }
+  },
+  {
+    "context": {
+      "job_title": "Mobile Developer",
+      "language": "en",
+      "skills": ["React Native", "Flutter", "iOS", "Android", "Firebase"]
+    }
+  },
+  {
+    "context": {
+      "job_title": "Backend Developer",
+      "language": "en",
+      "skills": ["Python", "Django", "PostgreSQL", "Redis", "REST API"]
+    }
+  },
+  {
+    "context": {
+      "job_title": "Ingénieur IA",
+      "language": "fr",
+      "skills": ["Python", "TensorFlow", "PyTorch", "Deep Learning", "NLP"]
+    }
+  },
+  {
+    "context": {
+      "job_title": "Product Manager",
+      "language": "en",
+      "skills": ["Product Strategy", "Agile", "Analytics", "User Research", "Roadmapping"]
+    }
+  },
+  {
+    "context": {
+      "job_title": "UX Designer",
+      "language": "en",
+      "skills": ["Figma", "User Research", "Prototyping", "Wireframing", "Design Systems"]
+    }
+  }
+]

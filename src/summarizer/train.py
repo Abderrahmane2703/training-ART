@@ -1,14 +1,23 @@
-import art
+print("🔄 Starting imports...")
 import asyncio
 from dotenv import load_dotenv
-import random
-#from art.skypilot import SkyPilotBackend
-from art.local import LocalBackend
-
-from rollout import rollout, JobOfferScenario
-from load_documents import load_documents
+print("✓ Basic imports loaded")
 
 load_dotenv()
+print("✓ Environment loaded")
+
+print("🔄 Loading ART (this may take a while)...")
+import art
+print("✓ ART loaded")
+
+print("🔄 Loading local backend...")
+from art.local import LocalBackend
+print("✓ Backend loaded")
+
+print("🔄 Loading custom modules...")
+from rollout import rollout, JobOfferScenario
+from load_documents import load_documents
+print("✓ All imports complete")
 
 AGENT_NAME = "job-offer-agent"
 PROJECT_NAME = "job-offer-generation"
@@ -16,7 +25,10 @@ CLUSTER_NAME = "job-offer-art"
 
 
 async def main():
+    print("🚀 Starting ART training...")
+    print("Loading documents from S3...")
     val_contexts, train_contexts = load_documents()
+    print(f"Loaded {len(train_contexts)} training contexts, {len(val_contexts)} validation contexts")
 
     #backend = await SkyPilotBackend.initialize_cluster(
     #    cluster_name=CLUSTER_NAME,
@@ -36,7 +48,7 @@ async def main():
     model = art.TrainableModel(
         name=AGENT_NAME,
         project=PROJECT_NAME,
-        base_model="/mnt/c/Users/abder/Documents/CapitaleTech/Training/Summary-RL/gemma-3-270m-it",
+        base_model="s3://job-offer-generation/base-model/gemma-3-270m-it/",
     )
     #await backend._experimental_pull_from_s3(model)
     await model.register(backend)
