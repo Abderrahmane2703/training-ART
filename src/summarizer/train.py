@@ -1,23 +1,27 @@
 print("🔄 Starting imports...")
 
 import asyncio
+import os
+import random
 from dotenv import load_dotenv
 print("✓ Basic imports loaded")
 
 load_dotenv()
 print("✓ Environment loaded")
 
-print("🔄 Loading Unsloth for optimization...")
-import unsloth
-print("✓ Unsloth loaded")
+# Unsloth not needed since using regular Qwen model
+#print("🔄 Loading Unsloth for optimization...")
+#import unsloth
+#print("✓ Unsloth loaded")
 
 print("🔄 Loading ART (this may take a while)...")
 import art
 print("✓ ART loaded")
 
-print("🔄 Loading local backend...")
-from art.local import LocalBackend
-print("✓ Backend loaded")
+print("🔄 Loading backend modules...")
+#from art.local import LocalBackend
+from art.skypilot import SkyPilotBackend
+print("✓ Backend modules loaded")
 
 print("🔄 Loading custom modules...")
 from rollout import rollout, JobOfferScenario
@@ -35,25 +39,25 @@ async def main():
     val_contexts, train_contexts = load_documents()
     print(f"Loaded {len(train_contexts)} training contexts, {len(val_contexts)} validation contexts")
 
-    #backend = await SkyPilotBackend.initialize_cluster(
-    #    cluster_name=CLUSTER_NAME,
-    #    env_path=".env",
-    #    gpu="H100",
-    #)
-
-    backend = LocalBackend(
-        # set to True if you want your backend to shut down automatically
-        # when your client process ends
-        in_process=True,
-        # local path where the backend will store trajectory logs and model weights
-        #path="./.art",
+    backend = await SkyPilotBackend.initialize_cluster(
+        cluster_name=CLUSTER_NAME,
+        env_path=".env",
+        gpu="L4",
     )
+
+    #backend = LocalBackend(
+    #    # set to True if you want your backend to shut down automatically
+    #    # when your client process ends
+    #    in_process=True,
+    #    # local path where the backend will store trajectory logs and model weights
+    #    #path="./.art",
+    #)
 
 
     model = art.TrainableModel(
         name=AGENT_NAME,
         project=PROJECT_NAME,
-        base_model="unsloth/Qwen3-0.6B",  # Unsloth-optimized 600M param model
+        base_model="Qwen/Qwen3-0.6B",  # Unsloth-optimized 600M param model
     )
     #await backend._experimental_pull_from_s3(model)
     await model.register(backend)
