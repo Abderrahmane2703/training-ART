@@ -1,0 +1,82 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv
+*.egg-info/
+dist/
+build/
+
+# Jupyter
+.ipynb_checkpoints
+*.ipynb
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Docker
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# Model/Data files
+*.pth
+*.pt
+*.safetensors
+*.bin
+*.h5
+*.ckpt
+*.pickle
+*.pkl
+*.npy
+*.npz
+
+# Logs and temp files
+*.log
+logs/
+tmp/
+temp/
+cache/
+
+# Documentation
+README.md
+docs/
+*.md
+
+# Testing
+tests/
+pytest_cache/
+.coverage
+
+# Environment
+.env
+.env.*
+
+# Large directories that shouldn't be in image
+gemma-3-270m-it/
+data/
+models/
+checkpoints/
+outputs/
+wandb/
+.art/
+.cache/
+
+# Project files not needed in container
+PROJECT_SUMMARY.md
+=0.3.6

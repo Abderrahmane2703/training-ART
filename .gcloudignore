@@ -1,0 +1,124 @@
+# This file specifies files that are *not* uploaded to Google Cloud
+# using gcloud builds submit.
+
+# Include .dockerignore rules
+#!include:.dockerignore
+.dockerignore
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+*.egg-info/
+*.egg
+build/
+dist/
+.pytest_cache/
+
+# Model files (LARGE!)
+*.pth
+*.pt
+*.bin
+*.safetensors
+*.ckpt
+*.h5
+*.pkl
+*.pickle
+*.npy
+*.npz
+*.gguf
+*.onnx
+*.pb
+*.tflite
+gemma-3-270m-it/
+models/
+checkpoints/
+weights/
+
+# Data files
+*.csv
+*.json
+*.jsonl
+*.parquet
+*.arrow
+*.feather
+data/
+datasets/
+
+# Logs and outputs
+*.log
+logs/
+runs/
+outputs/
+wandb/
+.art/
+.cache/
+tmp/
+temp/
+
+# IDE and OS
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Documentation
+*.md
+docs/
+LICENSE
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+
+# Package managers
+uv.lock
+poetry.lock
+Pipfile.lock
+node_modules/
+package-lock.json
+yarn.lock
+
+# Test files
+tests/
+test_*.py
+*_test.py
+.coverage
+.tox/
+
+# Docker (except Dockerfile and requirements.txt)
+docker-compose*.yml
+Dockerfile.*
+.dockerignore
+
+# Environment variables
+.env*
+
+# Jupyter
+*.ipynb
+.ipynb_checkpoints/
+
+# Misc large files
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+*.iso
+*.dmg
+
+# Project specific
+=0.3.6
+PROJECT_SUMMARY.md

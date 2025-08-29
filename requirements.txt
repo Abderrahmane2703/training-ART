@@ -1,0 +1,59 @@
+# Core OpenPipe ART Framework for RL
+openpipe-art>=0.3.6
+openpipe>=4.50.0
+
+# Azure OpenAI Integration  
+openai>=1.97.1
+azure-identity>=1.19.0
+
+# Async Caching for Judge
+async-lru>=2.0.5
+
+# AWS S3 for Data Loading
+boto3>=1.26.0
+botocore>=1.29.0
+
+# Data Processing & Validation
+pydantic>=2.10.0
+polars>=1.32.0  # Required by ART for data processing
+numpy>=2.1.0
+
+# Environment Variables
+python-dotenv>=1.1.0
+
+# Progress Bar (used by ART)
+tqdm>=4.67.0
+
+# PyTorch (required by ART framework)
+# Note: PyTorch is installed separately in Dockerfile with CUDA index
+# torch==2.5.1
+# torchvision==0.20.1
+
+# Transformers & Model Loading (required by ART)
+transformers>=4.55.0
+accelerate>=1.7.0
+safetensors>=0.6.0
+huggingface-hub[hf_transfer]>=0.34.0
+tokenizers>=0.21.0
+sentencepiece>=0.2.0
+datasets>=4.0.0
+
+# Backend Dependencies (required by ART LocalBackend)
+tblib>=3.1.0  # For traceback serialization
+setproctitle>=1.3.0  # For process naming
+filelock>=3.18.0
+psutil>=7.0.0
+cloudpickle>=3.1.0
+pyzmq  # For inter-process communication
+msgspec  # For message serialization
+einops  # For tensor operations
+
+# Additional ML utilities
+tiktoken>=0.11.0
+
+# VLLM for inference optimization (required by ART TorchtuneService)
+vllm>=0.6.0
+
+# TorchTune for training (used by ART backend)
+torchtune>=0.6.0
+torchao>=0.12.0

@@ -57,7 +57,7 @@ async def main():
     model = art.TrainableModel(
         name=AGENT_NAME,
         project=PROJECT_NAME,
-        base_model="Qwen/Qwen3-0.6B",  # Unsloth-optimized 600M param model
+        base_model="Qwen/Qwen3-0.6B",  
     )
     #await backend._experimental_pull_from_s3(model)
     await model.register(backend)

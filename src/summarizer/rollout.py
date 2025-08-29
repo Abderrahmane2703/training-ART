@@ -163,20 +163,45 @@ Respond ONLY in JSON format:
 
     # Criterion 3: Context Inclusion (check if provided skills are included)
     if scenario.context.skills:
-        context_prompt = f"""Check if ALL the provided skills are included in the generated job offer.
+        context_prompt = f"""Evaluate skill inclusion with deduplication penalty.
 
-Provided skills that MUST be included: {', '.join(scenario.context.skills)}
+Required skills that MUST be included: {', '.join(scenario.context.skills)}
 
 Generated job offer:
 {generated_offer}
 
-Respond ONLY in JSON format:
-{{"all_skills_included": true or false, "missing_skills": []}}"""
+Instructions:
+1. Extract ALL skills mentioned in the job offer (from all sections)
+2. For each required skill, check if it's present (exact or fuzzy match)
+3. Identify duplicate/redundant skills (e.g., "Python" and "Python Programming", "ML" and "Machine Learning")
+4. Calculate base_score = matched_required_skills / total_required_skills
+5. Calculate deduplication_factor = 1 - (duplicate_count / total_extracted_skills)
+6. Calculate final_score = base_score * deduplication_factor
 
-        context_response = await get_judge_completion(context_prompt, max_tokens=200)
+Example of duplicates to detect:
+- "Python" + "Python" = duplicate
+- "Python" + "Python Programming" = duplicate
+- "Machine Learning" + "ML" = duplicate
+- "Data Analysis" + "Data Analytics" = duplicate
+- "Communication" + "Communication Skills" = duplicate
+
+Respond ONLY in JSON format:
+{{
+  "required_skills": ["skill1", "skill2"],
+  "extracted_skills": ["skill1", "skill2", ...],
+  "matched_skills": ["skill1", "skill2"],
+  "missing_skills": [],
+  "duplicate_groups": [["Python", "Python Programming"], ["ML", "Machine Learning"]],
+  "duplicate_count": number,
+  "base_score": 0.0-1.0,
+  "deduplication_factor": 0.0-1.0,
+  "final_score": 0.0-1.0
+}}"""
+
+        context_response = await get_judge_completion(context_prompt, max_tokens=400)
         try:
             result = json.loads(clean_json_response(context_response))
-            scores["context_inclusion"] = 1.0 if result.get("all_skills_included", False) else 0.0
+            scores["context_inclusion"] = result.get("final_score", 0.0)
         except:
             scores["context_inclusion"] = 0.0
     else:
@@ -187,46 +212,66 @@ Respond ONLY in JSON format:
     skill_relevance_prompt = f"""For a {scenario.context.job_title} position:
 
 1. Extract ALL skills mentioned in the job offer (both in Required Skills and Nice-to-Have sections)
-2. EXCLUDE these provided skills from evaluation (assume they are relevant): {provided_skills_str}
-3. Evaluate ONLY the NEW skills added by the model for relevance to {scenario.context.job_title}
-4. Score based on the percentage of relevant NEW skills
+2. EXCLUDE these provided skills from evaluation: {provided_skills_str}
+3. For each NEW skill added by the model, score it:
+   - 1 if relevant to {scenario.context.job_title}
+   - 0 if not relevant
+4. Calculate final score = sum(skill_scores) / total_new_skills
 
 Generated job offer:
 {generated_offer}
 
 Respond ONLY in JSON format:
 {{
-  "new_skills_added": ["skill1", "skill2"],
-  "relevant_new_skills": number,
-  "irrelevant_new_skills": ["skill1", "skill2"],
-  "score": 0-10
+  "provided_skills": ["skill1", "skill2"],
+  "all_extracted_skills": ["skill1", "skill2", ...],
+  "new_skills_evaluation": [
+    {{"skill": "skill_name", "relevant": 1}},
+    {{"skill": "skill_name", "relevant": 0}}
+  ],
+  "total_new_skills": number,
+  "relevant_count": number,
+  "final_score": 0.0-1.0
 }}"""
 
     skill_relevance_response = await get_judge_completion(skill_relevance_prompt, max_tokens=300)
     try:
         result = json.loads(clean_json_response(skill_relevance_response))
-        scores["skill_relevance"] = result.get("score", 5) / 10
+        scores["skill_relevance"] = result.get("final_score", 0.5)
     except:
         scores["skill_relevance"] = 0.5
 
     # Criterion 5: Skill Completeness (check for missing obvious skills)
-    completeness_prompt = f"""For a {scenario.context.job_title} position in {scenario.context.language} language:
+    completeness_prompt = f"""Evaluate skill completeness for {scenario.context.job_title} position.
 
-Current skills in the job offer:
+Review the generated job offer and identify essential skills that are missing.
+Essential = skills that 80%+ of {scenario.context.job_title} job postings would include.
+
+Generated job offer:
 {generated_offer}
 
-Are there any CRITICAL skills missing that are absolutely essential for this role?
+For each missing essential skill:
+1. Explain why it's essential for this role
+2. Rate its importance: 1.0 (critical), 0.5 (important), 0.25 (nice-to-have)
+
+Calculate penalty = sum(importance_scores) / 10 (capped at 1.0)
+Final score = 1.0 - penalty
 
 Respond ONLY in JSON format:
 {{
-  "score": 0-10,
-  "missing_critical_skills": []
+  "skills_present": ["skill1", "skill2", ...],
+  "missing_essentials": [
+    {{"skill": "Git", "importance": 1.0, "reason": "Version control is critical for any developer role"}},
+    {{"skill": "Testing", "importance": 0.5, "reason": "Most positions require testing knowledge"}}
+  ],
+  "total_penalty": 0.0-1.0,
+  "final_score": 0.0-1.0
 }}"""
 
     completeness_response = await get_judge_completion(completeness_prompt, max_tokens=300)
     try:
         result = json.loads(clean_json_response(completeness_response))
-        scores["skill_completeness"] = result.get("score", 5) / 10
+        scores["skill_completeness"] = result.get("final_score", 0.5)
     except:
         scores["skill_completeness"] = 0.5  # Default if parsing fails
 
